@@ -1,0 +1,21 @@
+
+
+# name the node to be called program control 
+
+# starts the competition under program control
+rosservice call /ariac/start_competition
+
+# starts the conveyor moving (a service call to /ariac/conveyor/control)
+rosservice call /ariac/conveyor/control 
+
+# monitors logical camera 2 for object “shipping_box”
+$ rostopic echo /ariac/logical_camera_2
+
+# halts the conveyor when logical-camera 2 reports z-value of shipping box is close to zero (i.e. 
+box centered under camera)
+
+# pauses for 5 seconds with the box under camera 2
+
+# restarts the conveyor and runs until box0 slides down to the loading dock
+
+# calls the drone to fetch the (empty) box
