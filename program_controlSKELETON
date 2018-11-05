@@ -9,13 +9,28 @@ rosservice call /ariac/start_competition
 rosservice call /ariac/conveyor/control 
 
 # monitors logical camera 2 for object “shipping_box”
-$ rostopic echo /ariac/logical_camera_2
-
+      $ rostopic echo /ariac/logical_camera_2
+      
+    // Subscribe to the '/ariac/logical_camera_2' topic.
+  ros::Subscriber logical_camera_subscriber = node.subscribe(
+    "/ariac/logical_camera_2", 10,
+    &MyCompetitionClass::logical_camera_callback, &comp_class);
+    
 # halts the conveyor when logical-camera 2 reports z-value of shipping box is close to zero (i.e. 
 box centered under camera)
-
+      // if statment in C++ that looks at the topic
+      //    "/ariac/logical_camera_2"for item "shipping_box" and the z-values 
+//  if (type == "shipping_box" && z-values < 0.05)
+    {
+      ROS_INFO("Shipping Box Centered Below Logical_2");
+    }
+     
+**how to end the ros service?
+ 
 # pauses for 5 seconds with the box under camera 2
+  sleep(5);
 
 # restarts the conveyor and runs until box0 slides down to the loading dock
+rosservice call /ariac/conveyor/control
 
 # calls the drone to fetch the (empty) box
