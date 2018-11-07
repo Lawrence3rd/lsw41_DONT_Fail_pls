@@ -6,20 +6,23 @@
 
 //monitors logical camera 2 for object “shipping_box” 
 
+///// Called when a new LogicalCameraImage message is received.
+     void logical_camera_callback(const osrf_gear::LogicalCameraImage::ConstPtr & image_msg) {
+      ROS_INFO_STREAM_THROTTLE(10,"Logical camera: '" << image_msg->models.size() << "' objects.");
+ }
+
 //callbackfunction logical2_ID is just a function name I came up with for callback
       void logical2_ID(const package_name::type_name &msg) {
       
             // if statment in C++ that looks at the topic in callback function "/ariac/logical_camera_2.type"for item "shipping_box" and the z-values 
-            if (/ariac/logical_camera_2.type == "shipping_box" && -0.05 < /ariac/logical_camera_2.z-values < 0.05) {
+            if (/ariac/logical_camera_2.type == "shipping_box" && -0.05 < /ariac/logical_camera_2.pose.position.z < 0.05) {
             
                   ROS_INFO("Shipping Box Centered Below Logical_2");
                   // halts the conveyor 
                   **how to end the ros service?
                   // pauses for 5 seconds with the box under camera 2
                   sleep(5);   
-                  
- 
- 
+                 
  
 }
 }
@@ -31,7 +34,6 @@ int main (int argc, char **argv) {
       "/ariac/logical_camera_2", 10,
       &MyCompetitionClass::logical_camera_callback, &comp_class);
     
-
 
 # restarts the conveyor and runs until box0 slides down to the loading dock
 rosservice call /ariac/conveyor/control
