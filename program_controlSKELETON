@@ -1,36 +1,46 @@
-
+#include ros/ros.h
+//What else needs to be included???
+//Header file for the ariac/logical_camera_2??
 
 # name the node to be called program control 
 
-# starts the competition under program control
-rosservice call /ariac/start_competition
+//monitors logical camera 2 for object “shipping_box” 
 
-# starts the conveyor moving (a service call to /ariac/conveyor/control)
-rosservice call /ariac/conveyor/control 
-
-# monitors logical camera 2 for object “shipping_box”
-      $ rostopic echo /ariac/logical_camera_2
+//callbackfunction logical2_ID is just a function name I came up with for callback
+      void logical2_ID(const package_name::type_name &msg) {
       
-    // Subscribe to the '/ariac/logical_camera_2' topic.
-  ros::Subscriber logical_camera_subscriber = node.subscribe(
-    "/ariac/logical_camera_2", 10,
-    &MyCompetitionClass::logical_camera_callback, &comp_class);
-    
-# halts the conveyor when logical-camera 2 reports z-value of shipping box is close to zero (i.e. 
-box centered under camera)
-      // if statment in C++ that looks at the topic
-      //    "/ariac/logical_camera_2"for item "shipping_box" and the z-values 
-//  if (type == "shipping_box" && z-values < 0.05)
-    {
-      ROS_INFO("Shipping Box Centered Below Logical_2");
-    }
-     
-**how to end the ros service?
+            // if statment in C++ that looks at the topic in callback function "/ariac/logical_camera_2.type"for item "shipping_box" and the z-values 
+            if (/ariac/logical_camera_2.type == "shipping_box" && -0.05 < /ariac/logical_camera_2.z-values < 0.05) {
+            
+                  ROS_INFO("Shipping Box Centered Below Logical_2");
+                  // halts the conveyor 
+                  **how to end the ros service?
+                  // pauses for 5 seconds with the box under camera 2
+                  sleep(5);   
+                  
  
-# pauses for 5 seconds with the box under camera 2
-  sleep(5);
+ 
+ 
+}
+}
+      
+int main (int argc, char **argv) {
+
+// Subscribe to the '/ariac/logical_camera_2' topic. (main) (subscriber object)
+    ros::Subscriber logical_camera_subscriber = node.subscribe(
+      "/ariac/logical_camera_2", 10,
+      &MyCompetitionClass::logical_camera_callback, &comp_class);
+    
+
 
 # restarts the conveyor and runs until box0 slides down to the loading dock
 rosservice call /ariac/conveyor/control
 
 # calls the drone to fetch the (empty) box
+
+
+
+// $ rostopic echo /ariac/logical_camera_2 //starts the competition under program control (Main)
+            rosservice call /ariac/start_competition
+//starts the conveyor moving (a service call to /ariac/conveyor/control) (Main)
+            rosservice call /ariac/conveyor/control 
